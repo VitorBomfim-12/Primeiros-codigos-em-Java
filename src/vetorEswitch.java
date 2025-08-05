@@ -82,20 +82,20 @@ import java.util.Scanner;
 		int entrada=0;
 	    String nomeEscolhido = null;
 	
+			
 		System.out.println("Insira a senha de administrador:");
+		while (tentativa<=4) {
 		 entrada = scan.nextInt();
 	
-			while (tentativa<=4) {
-				
-			if(entrada == senhaAdm) {
+			while (true) {
+				if(entrada == senhaAdm) {
 				System.out.println("Selecione o usuário desejado, de 0-99");
 				 usuario=scan.nextInt();
-            if (usuario>senhas.length||usuario<=0) {
-            	System.out.println("Número de usuário inválido");
+            if (usuario>senhas.length||usuario<=0 || senhas[usuario]>=1000) {
+            	System.out.println("Número de usuário inválido ou já cadastrado, delete o usuário ou escolha outro número");
             	continue;
-            	
-            }  
-					
+            
+            }
 				
 				while (true) {
 				    scan.nextLine();
@@ -125,6 +125,9 @@ import java.util.Scanner;
 				 System.out.println("Senha incorreta, digite novamente");
 			    tentativa++;
 				}
+				break;
+			}	
+			
 				
 			
 		}
@@ -142,10 +145,11 @@ import java.util.Scanner;
 	public static boolean acessarPerfil() {
 		int tentativa=0;
 		int entrada =0;
-		while (tentativa <=4) {
+		
 		System.out.println("Digite o número do usuário");
 		usuario=scan.nextInt();	
 
+        while (tentativa <=4) {
 		System.out.println("Digite a senha do usuário");
 		 entrada = scan.nextInt();
 
@@ -206,11 +210,12 @@ import java.util.Scanner;
 		int entrada=0;
 		int usuarioDeletado=0;
 		int tentativa=0;
-		System.out.println("Digite a senha de administrador");
-		entrada=scan.nextInt();
+		
 		
 		while(tentativa<=2) {
-		
+
+		System.out.println("Digite a senha de administrador");
+		entrada=scan.nextInt();
 				
 					while(true) {
 					if (entrada==senhaAdm) {
@@ -238,13 +243,13 @@ import java.util.Scanner;
 						break;
 						}
 										}else {
-											System.out.println("Senha inválida");
+											System.out.println("Senha inválida, digite novamente");
 											tentativa++;
-											
+											break;
 										}
 			
 			}
-			break;
+			
 		
 		}
 		return false;
