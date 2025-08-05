@@ -80,7 +80,7 @@ import java.util.Scanner;
 	public static boolean criarSenha() {
 		int tentativa=0;
 		int entrada=0;
-	    String nomeEscolhido = "";
+	    String nomeEscolhido = null;
 	
 		System.out.println("Insira a senha de administrador:");
 		 entrada = scan.nextInt();
@@ -90,7 +90,7 @@ import java.util.Scanner;
 			if(entrada == senhaAdm) {
 				System.out.println("Selecione o usuário desejado, de 0-99");
 				 usuario=scan.nextInt();
-            if (usuario>senhas.length||usuario<0) {
+            if (usuario>senhas.length||usuario<=0) {
             	System.out.println("Número de usuário inválido");
             	continue;
             	
@@ -144,11 +144,11 @@ import java.util.Scanner;
 		int entrada =0;
 		while (tentativa <=4) {
 		System.out.println("Digite o número do usuário");
-		usuario=scan.nextInt();			
+		usuario=scan.nextInt();	
+
 		System.out.println("Digite a senha do usuário");
 		 entrada = scan.nextInt();
-		
-		
+
 			if (entrada == 0 || usuario>senhas.length || usuario<0) {
 				System.out.println("Senha inválida ou numero de usuário inválido");
 			    continue;
@@ -224,7 +224,7 @@ import java.util.Scanner;
 						if (entrada==1) {
 							
 							senhas[usuarioDeletado]=0;
-							nomes[usuarioDeletado]="";
+							nomes[usuarioDeletado]=null;
 					   
 						return true;	
 						}else if (entrada==2) {
