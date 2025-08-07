@@ -65,7 +65,7 @@ import java.util.Scanner;
 		     }
 		 }
 		 scan.close();
-		System.out.println("Encerrando programa.");
+		System.out.println("Encerrando programa.\n"+tentativaGeral);
 		
 	}
 		 
@@ -207,18 +207,20 @@ import java.util.Scanner;
 		
 	}	
 	public static boolean deletarUsuario() {
+		int entradaAdm=0;
 		int entrada=0;
 		int usuarioDeletado=0;
 		int tentativa=0;
-		
+		boolean continuar = true;
+	
 		
 		while(tentativa<=2) {
 
 		System.out.println("Digite a senha de administrador");
-		entrada=scan.nextInt();
+		entradaAdm=scan.nextInt();
 				
 					while(true) {
-					if (entrada==senhaAdm) {
+					if (entradaAdm==senhaAdm && continuar) {
 						System.out.println("Insira o usuário a ser deletado");
 						usuarioDeletado = scan.nextInt();
 						
@@ -226,27 +228,41 @@ import java.util.Scanner;
 						
 						System.out.println("Deseja deletar os dados do usuário "+ nomes[usuarioDeletado]+"? - Digite os seguintes números para prosseguir \n 1-Deletar dados do usuário \n 2-Retornar ação \n 3-Retornar ao menu. ");
 						entrada=scan.nextInt();
-						if (entrada==1) {
-							
-							senhas[usuarioDeletado]=0;
-							nomes[usuarioDeletado]=null;
-					   
-						return true;	
-						}else if (entrada==2) {
-							
-			            System.out.println("Retornando");
-							continue;
-						}else if(entrada==3) {
+
+						  switch(entrada){
+
+                        case 1:
+						senhas[usuarioDeletado]=0;
+                        nomes[usuarioDeletado]=null;
+                        System.out.println("Usuário deletado com sucesso!");
+						return true;
+                        
+						case 2: 
+						System.out.println("Retornando");
+						
+                        continue;
+
+
+                        case 3:
 						System.out.println("Retornando ao menu");
-							
-							
+						continuar = false;
 						break;
-						}
+
+						default:
+						System.out.println("Opção inválida, tente novamente.");
+					    break;
+					   }
+						return true;
 										}else {
 											System.out.println("Senha inválida, digite novamente");
 											tentativa++;
 											break;
 										}
+			
+		             
+
+					
+								
 			
 			}
 			
