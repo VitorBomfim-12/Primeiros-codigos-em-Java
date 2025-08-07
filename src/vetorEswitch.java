@@ -1,6 +1,4 @@
-// colocar proteção contra usuário invalido
-
-
+// inserir proteção contra sobreposição de usuário previamente cadastrado
 import java.util.Scanner;
  public class vetorEswitch{
  static final int senhaAdm = 3658;
@@ -9,7 +7,8 @@ import java.util.Scanner;
  static int usuario=0;
  static final int MAX_TENTATIVAGERAL=3;
  static final int SENHA_MINIMA=1000;
- 
+
+
  static int[] senhas= new int[100];
  static String[] nomes = new String[100];
 		 
@@ -65,6 +64,7 @@ import java.util.Scanner;
 		     }
 		 }
 		 scan.close();
+		 //Linha destinada a checar variáveis a fim de testes
 		System.out.println("Encerrando programa.\n"+tentativaGeral);
 		
 	}
@@ -223,13 +223,16 @@ import java.util.Scanner;
 					if (entradaAdm==senhaAdm && continuar) {
 						System.out.println("Insira o usuário a ser deletado");
 						usuarioDeletado = scan.nextInt();
-						
-						
-						
-						System.out.println("Deseja deletar os dados do usuário "+ nomes[usuarioDeletado]+"? - Digite os seguintes números para prosseguir \n 1-Deletar dados do usuário \n 2-Retornar ação \n 3-Retornar ao menu. ");
-						entrada=scan.nextInt();
 
-						  switch(entrada){
+						if (nomes[usuarioDeletado]==null || senhas[usuarioDeletado]<1000){
+                      System.out.println("Usuário não cadastrado");
+                      continue;
+
+						}else{
+					    System.out.println("Deseja deletar os dados do usuário "+ nomes[usuarioDeletado]+"? - Digite os seguintes números para prosseguir \n 1-Deletar dados do usuário \n 2-Retornar ação \n 3-Retornar ao menu. ");
+						entrada=scan.nextInt();
+					 
+                        switch(entrada){
 
                         case 1:
 						senhas[usuarioDeletado]=0;
@@ -242,7 +245,6 @@ import java.util.Scanner;
 						
                         continue;
 
-
                         case 3:
 						System.out.println("Retornando ao menu");
 						continuar = false;
@@ -253,26 +255,19 @@ import java.util.Scanner;
 					    break;
 					   }
 						return true;
+
+						}
+						
 										}else {
 											System.out.println("Senha inválida, digite novamente");
 											tentativa++;
 											break;
 										}
-			
-		             
-
-					
-								
-			
 			}
-			
-		
 		}
 		return false;
 	
 			
 					}
-					
-	
-		
+				
 	}
