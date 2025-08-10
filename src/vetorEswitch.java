@@ -1,5 +1,6 @@
 // inserir proteção contra sobreposição de usuário previamente cadastrado
 import java.util.Scanner;
+
  public class vetorEswitch{
  static final int senhaAdm = 3658;
  static int usuarioSenha=0;
@@ -11,7 +12,6 @@ import java.util.Scanner;
 
  static int[] senhas= new int[100];
  static String[] nomes = new String[100];
-		 
  static	Scanner scan = new Scanner (System.in);
  
 	public static void main(String[] args) {
@@ -64,7 +64,7 @@ import java.util.Scanner;
 		     }
 		 }
 		 scan.close();
-		 //Linha destinada a checar variáveis a fim de testes
+		
 		System.out.println("Encerrando programa.\n"+tentativaGeral);
 		
 	}
@@ -73,76 +73,86 @@ import java.util.Scanner;
 		
 		System.out.println("===Sistema de senhas===\n escolha a opção desejada: \n 1-Criar Senha \n 2-Acessar usuário \n 3-Mostrar usuarios cadastrados \n 4-Deletar usuário \n 5-Fechar programa  ");
 		return scan.nextInt();
-		
-		
+			
 	}
 	
 	public static boolean criarSenha() {
 		int tentativa=0;
 		int entrada=0;
+		boolean acesso = false;
+
 	    String nomeEscolhido = null;
 	
-			
-		System.out.println("Insira a senha de administrador:");
-		while (tentativa<=4) {
-		 entrada = scan.nextInt();
-	
+
+		while (tentativa<4){
+
+           acesso =  verificaSenha(true,0);
+
+
+			if(acesso){
+        
+
 			while (true) {
-				if(entrada == senhaAdm) {
-				System.out.println("Selecione o usuário desejado, de 0-99");
-				 usuario=scan.nextInt();
+
+             	System.out.println("Selecione o usuário desejado, de 0-99");
+				usuario=scan.nextInt();
+
             if (usuario>senhas.length||usuario<=0 || senhas[usuario]>=1000) {
             	System.out.println("Número de usuário inválido ou já cadastrado, delete o usuário ou escolha outro número");
             	continue;
-            
             }
-				
-				while (true) {
-				    scan.nextLine();
+
+			   scan.nextLine();
+			
 					System.out.println("Digite o nome desejado para o usuário - " + usuario);
 			        nomeEscolhido =scan.nextLine();
-					
-					System.out.println("Digite a senha desejada *A SENHA DEVE TER NO MÍNIMO 4 DÍGITOS");
+
+					if (!nomeEscolhido.matches("[a-zA-ZÀ-ÿ ]+")){
+                    System.out.println("Nome inválido, digite novamente");
+					continue;
+					}
+					    System.out.println("Digite a senha desejada *A SENHA DEVE TER NO MÍNIMO 4 DÍGITOS");
 					 entrada = scan.nextInt();
-						if(entrada == 0 || entrada < SENHA_MINIMA) {
-							System.out.println("Senha invalida");
-							
-						}else {
-							System.out.println("Senha definida com sucesso!");
-							senhas[usuario] = entrada;
-						    nomes[usuario]= nomeEscolhido;
-							break;
+
+						if(entrada != 0 && entrada >= SENHA_MINIMA) {
 						
-							
+                        
+	                 	System.out.println("Senha definida com sucesso!");
+						senhas[usuario] = entrada;
+						nomes[usuario]= nomeEscolhido;
+						return true;
+				
+
+						}else {
+                        System.out.println("Senha invalida");               
+				        continue;
 							
 						}
-						
-				}
-				return true;
-				
-				
-				}else{
-				 System.out.println("Senha incorreta, digite novamente");
-			    tentativa++;
-				}
-				break;
-			}	
+
 			
-				
-			
+			}
+		
+		}else{
+
+			tentativa++;
+
+		     }
+	
 		}
 		
-		
-		System.out.println("Retornando ao menu.");
+		System.out.println("Retornando ao menu");
+        
 		return false;
+	}
+
 	
-		}
 		
 		
 		
+		
 	
 	
-	public static boolean acessarPerfil() {
+	    public static boolean acessarPerfil() {
 		int tentativa=0;
 		int entrada =0;
 		
@@ -154,8 +164,8 @@ import java.util.Scanner;
 		 entrada = scan.nextInt();
 
 			if (entrada == 0 || usuario>senhas.length || usuario<0) {
-				System.out.println("Senha inválida ou numero de usuário inválido");
-			    continue;
+				    System.out.println("Senha inválida ou numero de usuário inválido");
+			        continue;
 			}else {
 				if (entrada == senhas[usuario]) {
 					System.out.println("Usuário acessado com sucesso!");
@@ -163,8 +173,8 @@ import java.util.Scanner;
 					tentativa=0;
 					return true;
 					}else {
-						System.out.println("Senha incorreta! digite novamente");
-						tentativa++;
+					System.out.println("Senha incorreta! digite novamente");
+					tentativa++;
 						
 						
 					}
@@ -187,7 +197,7 @@ import java.util.Scanner;
 					if (senhas[i]<=1000) {
 						
 					}else { 
-						System.out.println(nomes[i] +" usuário "+ i +" cadastrado");
+					System.out.println(nomes[i] +" usuário "+ i +" cadastrado");
 					}
 					
 					
@@ -195,16 +205,12 @@ import java.util.Scanner;
 				
 				return true;
 			}else{
-				System.out.println("Senha incorreta, digite novamente");
-				tentativa++;
+				  System.out.println("Senha incorreta, digite novamente");
+				  tentativa++;
 			}
 		}
 		
-	
-		return false;
-		
-		
-		
+		return false;	
 	}	
 	public static boolean deletarUsuario() {
 		int entradaAdm=0;
@@ -220,13 +226,13 @@ import java.util.Scanner;
 		entradaAdm=scan.nextInt();
 				
 					while(true) {
-					if (entradaAdm==senhaAdm && continuar) {
+					    if (entradaAdm==senhaAdm && continuar) {
 						System.out.println("Insira o usuário a ser deletado");
 						usuarioDeletado = scan.nextInt();
 
 						if (nomes[usuarioDeletado]==null || senhas[usuarioDeletado]<1000){
-                      System.out.println("Usuário não cadastrado");
-                      continue;
+                        System.out.println("Usuário não cadastrado");
+                        continue;
 
 						}else{
 					    System.out.println("Deseja deletar os dados do usuário "+ nomes[usuarioDeletado]+"? - Digite os seguintes números para prosseguir \n 1-Deletar dados do usuário \n 2-Retornar ação \n 3-Retornar ao menu. ");
@@ -270,4 +276,53 @@ import java.util.Scanner;
 			
 					}
 				
+
+    public static boolean verificaSenha(boolean nivelAcesso, int numeroUsuario){
+    
+
+		//1 - ADMINISTRADOR
+		//2 - USUARIOS 
+	int entrada = 0;
+
+    if (nivelAcesso){
+    System.out.println("Digite a senha de administrador");
+    entrada = scan.nextInt();
+	if (entrada == senhaAdm){
+
+    return true;
+
+	}else{
+    System.out.println("Senha incorreta");
+	return false;
+	}
+
+
+
+	}else{
+    System.out.println("Digite a senha do usuário");
+	entrada = scan.nextInt();
+    if (entrada == senhas[numeroUsuario]){
+    return true;
+
+	}else{
+	System.out.println("Senha incorreta");
+	return false;
+}
+
+
+	}
+
+
+
+
+
+
+	}
+
+
+
+
+
+
+
 	}
