@@ -77,14 +77,14 @@ import java.util.Scanner;
 	}
 	
 	public static boolean criarSenha() {
-		int tentativa=0;
+	
 		int entrada=0;
 		boolean acesso = false;
 
 	    String nomeEscolhido = null;
 	
 
-		while (tentativa<4){
+	
 
            acesso =  verificaSenha(true,0);
 
@@ -134,23 +134,11 @@ import java.util.Scanner;
 		
 		}else{
 
-			tentativa++;
+			return false;
 
 		     }
-	
-		}
-		
-		System.out.println("Retornando ao menu");
-        
-		return false;
-	}
 
-	
-		
-		
-		
-		
-	
+	}
 	
 	    public static boolean acessarPerfil() {
 		int tentativa=0;
@@ -283,7 +271,17 @@ import java.util.Scanner;
 		//1 - ADMINISTRADOR
 		//2 - USUARIOS 
 	int entrada = 0;
+    int tentativa = 0;
 
+    while (tentativa<4){
+
+    if(numeroUsuario>senhas.length){
+    System.out.println("Usuário inválido, insira novamente");
+    continue;
+	
+	}else{
+
+    
     if (nivelAcesso){
     System.out.println("Digite a senha de administrador");
     entrada = scan.nextInt();
@@ -293,7 +291,8 @@ import java.util.Scanner;
 
 	}else{
     System.out.println("Senha incorreta");
-	return false;
+	tentativa++;
+	continue;
 	}
 
 
@@ -306,11 +305,19 @@ import java.util.Scanner;
 
 	}else{
 	System.out.println("Senha incorreta");
-	return false;
+	tentativa++;
+	continue;
+	
 }
 
 
 	}
+
+
+
+	}
+	}
+    return false;
 
 
 
